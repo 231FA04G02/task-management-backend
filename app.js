@@ -1,3 +1,4 @@
+
 const express = require("express");
 const app = express();
 const port = 3000;
@@ -6,10 +7,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const mongoose = require("mongoose");
-mongoose.connect("mongodb+srv://singhayush5432_db_user:Ayush9122@cluster0.akzwfte.mongodb.net/taskmangement", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+mongoose.connect("mongodb+srv://singhayush5432_db_user:Ayush9122@cluster0.akzwfte.mongodb.net/taskmangement")
 .then(() => console.log("✅ MongoDB connected successfully"))
 .catch(err => console.error("❌ MongoDB connection error:", err));
 
@@ -106,6 +104,7 @@ app.post("/read", async (req, res) => {
 
 // -------------------- Delete Task --------------------
 app.post("/delete", async (req, res) => {
+  console.log("asdas");
   try {
     const { userId, taskName } = req.body;
     const user = await SignupUser.findById(userId);
@@ -211,6 +210,6 @@ app.post("/notifications", async (req, res) => {
 mongoose.connection.once("open", async () => {
   console.log("🚀 Server running on port", port);
   app.listen(port, async () => {
-    await rescheduleAllTasks(); // only runs after DB is ready
+    await rescheduleAllTasks();
   });
 });
