@@ -6,7 +6,7 @@ async function sendInstantEmail(user, taskName) {
   try {
     const msg = {
       to: user.email,
-      from: "your_verified_sender_email@example.com", // 👈 must be verified in SendGrid
+      from: "singhayush5432@gmail.com", // 👈 must be verified in SendGrid
       subject: "New Task Added Successfully ✅",
       text: `Hello ${user.name}, your new task "${taskName}" has been added successfully!`,
       html: `<h2>Hello ${user.name},</h2>
