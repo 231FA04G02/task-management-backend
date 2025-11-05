@@ -1,34 +1,23 @@
+// emailReminder.js
 const sgMail = require("@sendgrid/mail");
-const dotenv = require("dotenv");
-dotenv.config();
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-// ✅ Configure SendGrid
-if (process.env.SENDGRID_API_KEY) {
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-  console.log("📧 SendGrid configured successfully");
-} else {
-  console.error("❌ SENDGRID_API_KEY not set in .env");
-}
-
-/**
- * Send instant email when a task is added
- */
 async function sendInstantEmail(user, taskName) {
   try {
     const msg = {
       to: user.email,
-      from: process.env.SENDGRID_FROM, // must be a verified sender
-      subject: `📝 Task Added: ${taskName}`,
-      text: `Hello ${user.name}, your task "${taskName}" has been added successfully.`,
-      html: `<p>Hello <b>${user.name}</b>,</p>
-             <p>Your task <b>"${taskName}"</b> has been added successfully to your list.</p>
-             <p>Keep up the great work! 💪</p>`,
+      from: "your_verified_sender_email@example.com", // 👈 must be verified in SendGrid
+      subject: "New Task Added Successfully ✅",
+      text: `Hello ${user.name}, your new task "${taskName}" has been added successfully!`,
+      html: `<h2>Hello ${user.name},</h2>
+             <p>Your new task <b>${taskName}</b> has been added successfully!</p>
+             <p>Best regards,<br>Task Management System</p>`,
     };
 
     await sgMail.send(msg);
-    console.log(`✅ Instant email sent to ${user.email} for task "${taskName}"`);
-  } catch (err) {
-    console.error("❌ SendGrid email error:", err.response?.body || err.message);
+    console.log(`📧 Instant email sent to ${user.email} for task: ${taskName}`);
+  } catch (error) {
+    console.error("❌ Error sending instant email:", error);
   }
 }
 
